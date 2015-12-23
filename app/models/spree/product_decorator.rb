@@ -5,7 +5,7 @@ module Spree
       @apply_sale_for_variants = (string_value == '1')
     end
 
-    delegate_belongs_to :master, :sale_price, :sale_rate
+    delegate_belongs_to :master, :sale_price, :sale_rate, :sale_date
 
     after_save :apply_sale_for_variants_if_any
 
@@ -13,6 +13,7 @@ module Spree
       if apply_sale_for_variants
         variants.each do |variant|
           variant.sale_rate = sale_rate
+          variant.sale_date = sale_date
           variant.save
         end
       end

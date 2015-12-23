@@ -10,6 +10,11 @@ Deface::Override.new(:virtual_path => 'spree/admin/products/_form',
         Sale rates are a decimal amount to aid in calculations, (i.e. if the sale rate is 5% then enter 0.05)
       </p>
     <% end %>
+    <%= f.field_container :sale_date, class: ['form-group'] do %>
+      <%= f.label :sale_date, 'Sale Available on' %>
+      <%= f.error_message_on :sale_date %>
+      <%= f.text_field :sale_date, value: datepicker_field_value(@product.sale_date), class: 'datepicker form-control' %>
+    <% end %>
     <%= f.field_container :apply_sale_for_variants, class: ['form-group'] do %>
       <%= f.label :apply_sale_for_variants, 'Apply sale for all variants' %>
       <%= f.error_message_on :apply_sale_for_variants %>

@@ -20,8 +20,8 @@ module Spree
     after_save :make_product_on_sale
     def make_product_on_sale
       is_on_sale = product.variants_including_master.sale_off.count > 0
-      product.on_sale = is_on_sale
-      product.save
+      # product.on_sale = is_on_sale
+      product.update_column(:on_sale, is_on_sale)
     end
 
     def sale_off?

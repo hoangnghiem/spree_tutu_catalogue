@@ -2,11 +2,11 @@ module Spree
   Variant.class_eval do
     scope :sale_off, -> { where('sale_rate > 0').where.not(sale_date: nil).where('sale_date < ?', DateTime.now) }
 
-    # alias_method :orig_price_in, :price_in
-    # def price_in(currency)
-    #   return orig_price_in(currency) unless sale_off?
-    #   Spree::Price.new(:variant_id => self.id, :amount => self.sale_price, :currency => currency)
-    # end
+    alias_method :orig_price_in, :price_in
+    def price_in(currency)
+      return orig_price_in(currency) unless sale_off?
+      Spree::Price.new(:variant_id => self.id, :amount => self.sale_price, :currency => currency)
+    end
 
     before_save :calculate_sale_price
     def calculate_sale_price

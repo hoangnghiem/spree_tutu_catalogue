@@ -7,6 +7,8 @@ module Spree
       return orig_price_in(currency) unless sale_off?
       orig_amount = orig_price_in(currency).amount
       sale_amount = orig_amount - (orig_amount * sale_rate.to_f)
+      sale_amount = BigDecimal.new(sale_amount.to_s).round(0, BigDecimal::ROUND_FLOOR)
+
       Spree::Price.new(:variant_id => self.id, :amount => sale_amount, :currency => currency)
     end
 

@@ -5,7 +5,9 @@ module Spree
     alias_method :orig_price_in, :price_in
     def price_in(currency)
       return orig_price_in(currency) unless sale_off?
-      Spree::Price.new(:variant_id => self.id, :amount => self.sale_price, :currency => currency)
+      orig_amount = orig_price_in(currency).amount
+      sale_amount = orig_amount - (orig_amount * sale_rate.to_f)
+      Spree::Price.new(:variant_id => self.id, :amount => sale_amount, :currency => currency)
     end
 
     before_save :calculate_sale_price

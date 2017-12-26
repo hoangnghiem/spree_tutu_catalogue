@@ -28,7 +28,8 @@ module Spree
     end
 
     def sale_off?
-      !(sale_date.nil? || sale_date.future?) && sale_rate.to_f > 0
+      # !(sale_date.nil? || sale_date.future?) && sale_rate.to_f > 0
+      !sale_date.nil? && sale_date.to_date <= Date.current && sale_rate.to_f > 0
     end
 
   end
